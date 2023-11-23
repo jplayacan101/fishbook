@@ -13,6 +13,7 @@ This is a basic NestJS project connected to MongoDB using Mongoose. It is design
 # Install project dependencies
 npm install
 npm install @types/jest@27.0.1
+```
 
 ## Configuration
 
