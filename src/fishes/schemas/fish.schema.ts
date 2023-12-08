@@ -28,13 +28,13 @@ export class Fish extends Document {
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Habitat' }] })
   habitats: Habitat[];
 
-  @Prop({ required: true })
+  @Prop()
   eatingPatterns: string;
 
   @Prop({ required: true })
   picture: string;
 
-  @Prop({ required: true })
+  @Prop()
   behavior: string;
 
   @Prop({ type: Number })

@@ -23,23 +23,36 @@ export class FishesService {
 
     const createdTaxonomy = new this.taxonomyModel(taxonomy);
     await createdTaxonomy.save();
-
-    const createdConservationEffort = new this.conservationEffortModel(conservationEffort);
-    await createdConservationEffort.save();
-
+   
     const habitatsExist = await this.checkIfHabitatsExist(habitats);
-    if (habitats && !habitatsExist) {
+    if (!habitatsExist) {
       throw new NotFoundException('One or more habitats do not exist');
     }
 
-    const createdFish = new this.fishModel({
+    if (conservationEffort && Object.keys(conservationEffort).length !== 0) {
+      const createdConservationEffort = new this.conservationEffortModel(conservationEffort);
+      await createdConservationEffort.save();
+
+      const createdFish = new this.fishModel({
+        ...fishDto,
+        taxonomy: createdTaxonomy,
+        conservationEffort: createdConservationEffort,
+        habitats: habitats.map((habitat) => new this.habitatModel({ name: habitat })),
+      });
+
+      return createdFish.save();
+    }
+
+    const createdFish1 = new this.fishModel({
       ...fishDto,
       taxonomy: createdTaxonomy,
-      conservationEffort: createdConservationEffort,
       habitats: habitats.map((habitat) => new this.habitatModel({ name: habitat })),
     });
 
-    return createdFish.save();
+    return createdFish1.save();
+    
+
+    
   }
 
   async createMany(createFishDtos: CreateFishDto[]): Promise<Fish[]> {
