@@ -28,7 +28,7 @@ export class FishesService {
     await createdConservationEffort.save();
 
     const habitatsExist = await this.checkIfHabitatsExist(habitats);
-    if (!habitatsExist) {
+    if (habitats && !habitatsExist) {
       throw new NotFoundException('One or more habitats do not exist');
     }
 
