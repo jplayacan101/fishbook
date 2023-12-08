@@ -49,6 +49,9 @@ export class Fish extends Document {
   @Prop({ type: [String] })
   threats: string[];
 
+  @Prop()
+  video: string;
+
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'ConservationEffort' }] })
   conservationEffort: ConservationEffort[];
 }
